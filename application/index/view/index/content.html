@@ -1,0 +1,61 @@
+
+{if $result == 0}
+<p ><b>欢迎来到我的留言板</b><a href="login" >登录</a>||<a href="register" >注册</a></p>
+{else /}
+您好：{$result['username']}||<a href="{:url('Login/loginOut')}">注销</a>
+{/if}
+<form action="{:url('Message/do_save')}" method="post">
+    <textarea name="message" rows="10" cols="60" placeholder="您想要说什么呢" ></textarea><br>
+    <input type="text" name="user" placeholder="您的名字" />
+    <input type="submit" name="submit" value="留言" />
+</form>
+{volist name='list' id='vo' empty='暂时没有数据'}
+<tr>
+    <td>留言人：</td>
+    <td>
+        {$vo.user}
+        点赞数：{$vo.dianzan}
+        {neq name="result" value=""}
+        {eq name='$vo.dz_id' value='0'}
+        <a href="{:url('Index/dz',array('messageId'=>$vo['id']))}">点赞</a>
+        {/eq}
+        {eq name='$vo.dz_id' value='1'}
+        {if ($result.user_id == $vo.user_id)}
+        <a href="{:url('Index/qdz',array('messageId'=>$vo['id']))}">取消点赞</a>
+        {else /}
+        <a href="{:url('Index/dz',array('messageId'=>$vo['id']))}">点赞</a>
+        {/if}
+        {/eq}
+        {/neq}
+
+
+        {eq name='result' value='1'}
+        {eq name='$vo.flag' value='0'}
+        <a href="{:url('Index/zd',array('messageId'=>$vo['id']))}"><input type="submit" name="submit" value="置顶"></a>
+        {/eq}
+        {eq name='$vo.flag' value='1'}
+        <a href="{:url('Index/qzd',array('messageId'=>$vo['id']))}"><input type="submit" name="submit" value="取消置顶"></a>
+        {/eq}
+        {/eq}
+        <br>
+    </td>
+    <td>留言内容：</td>
+    <td>
+        <textarea>{$vo.connent}</textarea>
+        <br>
+    </td>
+    <td>留言时间：</td>
+    <td>
+        {$vo.time}
+        {if ($result == 1) OR ($result == $vo.user_id) }
+        <a href="{:url('Index/select',array('messageId'=>$vo['id']))}">查看</a>
+        <a href="{:url('Index/update',array('messageId'=>$vo['id']))}">修改</a>
+        <a href="{:url('Index/delete',array('messageId'=>$vo['id']))}">删除</a>
+
+        {/if}
+        <br>
+        <hr>
+    </td>
+</tr>
+{/volist}
+{$page|raw}

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>查看留言</title>
+</head>
+<body>
+{volist name='parm' id='vo'}
+<tr>
+    <td>留言人：</td>
+    <td>
+        {$vo.user}<br>
+    </td>
+    <td>留言内容：</td>
+    <td>
+        {$vo.connent}<br>
+    </td>
+    <td>留言时间：</td>
+    <td>
+        {$vo.time}
+        <br>
+    </td>
+    <td>
+        <a href="{:url('Index/update',array('messageId'=>$vo['id']))}">修改</a>
+    </td>
+</tr>
+{/volist}
+</body>
+</html>

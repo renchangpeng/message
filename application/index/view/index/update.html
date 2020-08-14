@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改留言</title>
+</head>
+<body>
+{volist name='parm' id='vo'}
+<form action="{:url('Index/doupdate')}" method="post">
+    <input type="text" name="user" value="{:$vo.user}"><br>
+    <textarea name="message" rows="10" cols="60" >{:$vo.connent}</textarea><br>
+    <input type="submit" name="submit" value="修改">
+</form>
+{/volist}
+</body>
+</html>
